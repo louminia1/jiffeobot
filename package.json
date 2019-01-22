@@ -1,0 +1,35 @@
+{
+  "name": "jiffeo",
+  "version": "0.0.1",
+  "description": "Bot reserver pour jiffeo",
+  "main": "index.js",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "ffmpeg": "^0.0.4",
+    "discord.js": "^11.4.2",
+    "lowdb": "^1.0.0",
+    "opusscript": "^0.0.6",
+    "ytdl-core": "^0.29.0"
+  },
+  "engines": {
+    "node": "11.5.0",
+    "npm": "6.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurlsube/jiffeo-discord-bot.git"
+  },
+  "keywords": [
+    "jiffeo"
+  ],
+  "author": "Staff Bot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aurlsube/jiffeo-discord-bot/issues"
+  },
+  "homepage": "https://github.com/aurlsube/jiffeo-discord-bot#readme"
+}
