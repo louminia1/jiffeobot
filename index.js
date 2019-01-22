@@ -6,9 +6,15 @@ const bot = new Discord.Client({disableEveryone : true});
 const prefix = ("!!")
 const AFF = require("./Modules/Utils/Affichage.json")
 bot.commands = new Discord.Collection();
-
+let cooldown_coins = new Set();
+let scds_coins = 20;
 
 //Data Init
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('Data.json');
+const db = low(adapter);
+db.defaults({ histoires: [],coins: [], Serveur: [],Valide: [], blacklist: [], Inscrit: [], notif: []}).write()
 
 
 bot.on("ready", async () => {
@@ -150,6 +156,9 @@ bot.on('guildMemberRemove', member => {
   })
 
 bot.on("message", async message => {
+  setTimeout(() => {
+    cooldown_coins.delete(message.author.id)
+  }, scds_coins * 1000 ) 
   
   if(message.author.bot) return;
   
@@ -159,6 +168,7 @@ bot.on("message", async message => {
   let msgauthor = message.author.id
   let codage = message.guild.id
 /*
+
   if (message.content.startsWith(prefix)){
     message.delete(5000)
     if(codage !== "527263112664055826"){
@@ -183,22 +193,27 @@ bot.on("message", async message => {
 //Data beans
 
 if(message.author.bot)return;
-/*
-if (!db.get("coins").find({user: msgauthor}).value()){
-     db.get("coins").push({user: msgauthor, coins: 1}).write();
+if(cooldown_coins.has(message.author.id)){
+  return;
 }else{
-  var usercoinsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
-  var userxpsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
-  console.log(usercoinsdb);
-  var usercoins = Object.values(usercoinsdb)
-  var userxps = Object.values(userxpsdb)
-  console.log(usercoins);
-  console.log(`Nombre de beans : ${usercoins[1]}`)
+  if (!db.get("coins").find({user: msgauthor}).value()){
+    db.get("coins").push({user: msgauthor, coins: 1}).write();
+  }else{
+    var usercoinsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
+    var userxpsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
+    console.log(usercoinsdb);
+    var usercoins = Object.values(usercoinsdb)
+    var userxps = Object.values(userxpsdb)
+    console.log(usercoins);
+    console.log(`Nombre de beans : ${usercoins[1]}`)
 
-  db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] += 1}).write();
-  if(usercoins[1] === 100 ) 
-  db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] = 1}).write();
-}*/
+    db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] += 1}).write();
+    if(usercoins[1] === 100 ) 
+    db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] = 1}).write();
+    cooldown_coins.add(message.author.id);
+  }
+}
+
 /*
 if (message.content === prefix + "beans"){
     var coins = db.get("coins").filter({user: msgauthor}).find('coins').value()
@@ -409,4 +424,4 @@ function Timer(Combien, mois, seconds, heure, Jours, minutes){
 function Chan(Combien, mois, seconds, heure, Jours, minutes){
 };
 
-bot.login(config.Token);
+//bot.login(config.Token);
