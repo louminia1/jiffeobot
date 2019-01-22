@@ -53,7 +53,6 @@ module.exports.run = async (bot, message, Args) => {
         .setTimestamp()
         channel.send(Help_Langue).then ( message => { message.delete(100000)})
 
-        
     })
 
 }
