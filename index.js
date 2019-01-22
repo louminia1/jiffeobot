@@ -7,12 +7,8 @@ const prefix = ("!!")
 const AFF = require("./Modules/Utils/Affichage.json")
 bot.commands = new Discord.Collection();
 
+
 //Data Init
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('Data.json');
-const db = low(adapter);
-db.defaults({ histoires: [],serv: [], coins: [],Valide: [], blacklist: [], Inscrit: [], notif: []}).write()
 
 
 bot.on("ready", async () => {

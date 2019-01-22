@@ -4,10 +4,12 @@
   "description": "Bot reserver pour jiffeo",
   "main": "index.js",
   "dependencies": {
-    "fs": "^0.0.1-security",
-    "ffmpeg": "^0.0.4",
     "discord.js": "^11.4.2",
+    "ffmpeg": "^0.0.4",
+    "fs": "^0.0.1-security",
     "lowdb": "^1.0.0",
+    "mongodb": "^3.1.12",
+    "mongoose": "^5.4.6",
     "opusscript": "^0.0.6",
     "ytdl-core": "^0.29.0"
   },
@@ -21,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aurlsube/jiffeo-discord-bot.git"
+    "url": "git+https://github.com/louminia1/jiffeobot.git"
   },
   "keywords": [
     "jiffeo"
@@ -29,7 +31,7 @@
   "author": "Staff Bot",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aurlsube/jiffeo-discord-bot/issues"
+    "url": "https://github.com/louminia1/jiffeobot/issues"
   },
-  "homepage": "https://github.com/aurlsube/jiffeo-discord-bot#readme"
+  "homepage": "https://github.com/louminia1/jiffeobot#readme"
 }
