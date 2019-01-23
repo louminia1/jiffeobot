@@ -14,11 +14,6 @@ const mongoose = require('mongoose');
 //var ws = new WS('123', 9000, bot)
 
 //Data Init
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('Data.json');
-const db = low(adapter);
-db.defaults({ histoires: [],coins: [], Serveur: [],Valide: [], blacklist: [], Inscrit: [], notif: []}).write()
 
 // DB Config
 const db = require('./Modules/Utils/keys').MongoURI;
