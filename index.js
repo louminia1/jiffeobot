@@ -9,6 +9,7 @@ const AFF = require("./Modules/Utils/Affichage.json")
 bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
+const mongoose = require('mongoose');
 
 //var ws = new WS('123', 9000, bot)
 
@@ -19,6 +20,12 @@ const adapter = new FileSync('Data.json');
 const db = low(adapter);
 db.defaults({ histoires: [],coins: [], Serveur: [],Valide: [], blacklist: [], Inscrit: [], notif: []}).write()
 
+// DB Config
+const db = require('./Modules/Utils/keys').MongoURI;
+// Mongoose Connect
+mongoose.connect(db, {useNewUrlParser: true})
+.then(() => console.log('MongoDB Connected...'))
+.catch(err => console.log(err));
 
 bot.on("ready", async () => {
   let bot_status = "dnd"
