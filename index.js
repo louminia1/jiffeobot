@@ -4,10 +4,13 @@ const fs = require("fs");
 const STF = require("./Modules/Utils/Staff.json");
 const bot = new Discord.Client({disableEveryone : true});
 const prefix = ("!!")
+//const WS = require('./ws/ws.js')
 const AFF = require("./Modules/Utils/Affichage.json")
 bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
-let scds_coins = 20;
+let scds_coins = 350;
+
+//var ws = new WS('123', 9000, bot)
 
 //Data Init
 const low = require('lowdb')
@@ -198,20 +201,30 @@ if(cooldown_coins.has(message.author.id)){
 }else{
   if (!db.get("coins").find({user: msgauthor}).value()){
     db.get("coins").push({user: msgauthor, coins: 1}).write();
+    cooldown_coins.add(message.author.id);
   }else{
     var usercoinsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
-    var userxpsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
     console.log(usercoinsdb);
     var usercoins = Object.values(usercoinsdb)
-    var userxps = Object.values(userxpsdb)
     console.log(usercoins);
     console.log(`Nombre de beans : ${usercoins[1]}`)
 
     db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] += 1}).write();
-    if(usercoins[1] === 100 ) 
-    db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] = 1}).write();
     cooldown_coins.add(message.author.id);
   }
+}
+
+if(message.content === prefix + "test"){
+  bot.guilds.defaults.map(serv =>{
+    var serveur = serv.guild.name
+    message.guild.members.forEach(member => {
+      var nombre_max = member.user.size
+      var nombre = 0;
+      var name = member.displayName
+      console.log(`Message pour ${name} serveur (${serveur}) ( ${nombre} sur ${nombre_max})`)
+      var nombre = nombre + 1
+    })
+  })
 }
 
 /*
@@ -293,6 +306,8 @@ if(message.content === prefix + "notif off") {
   message.reply("Vous avait desactiver les notification").then ( message => { message.delete(5000)})
 }
 */
+
+/*
 if(message.content === prefix + "global"){
   message.delete(1000)
     var Global_Message = new Discord.RichEmbed()
@@ -327,7 +342,7 @@ if(message.content === prefix + "global"){
         
 
     });
-}
+}*/
 
 
 
@@ -424,4 +439,4 @@ function Timer(Combien, mois, seconds, heure, Jours, minutes){
 function Chan(Combien, mois, seconds, heure, Jours, minutes){
 };
 
-//bot.login(config.Token);
+bot.login(config.Token);
