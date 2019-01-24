@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, Args) => {
         .setTimestamp()
     message.guild.members.forEach(member => {
 
-        var peudo = member.displayName
+        var pseudo = member.displayName
         var name_id = member.id
         var debut = 1
 
@@ -27,17 +27,17 @@ module.exports.run = async (bot, message, Args) => {
             db.get("notif").push({identifiant: name_id,status: debut}).write();
           }
 
-        var userstatussdb = db.get("notif").filter({identifiant: name_id}).find('status').value();
-        var userstatus = Object.values(userstatussdb)
+        var userstatusdb = db.get("notif").filter({identifiant: name_id}).find('status').value();
+        var userstatus = Object.values(userstatusdb)
 
 
        if(userstatus === 2){//desactiver 
-            console.log(` Message bloquer pour ${peudo}`)
+            console.log(` Message bloquer pour ${pseudo}`)
             return;
         }
 
         if(userstatus === 1 ){//activer 
-            console.log(` Message envoyer à ${peudo}`)
+            console.log(` Message envoyer à ${pseudo}`)
             if (member.id != bot.user.id && !member.user.bot) member.send(Global_Message).then ( message => { message.delete(7000)})
         }
 
