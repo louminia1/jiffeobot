@@ -174,24 +174,50 @@ bot.on("message", async message => {
   let Args = msgarray.slice(1);
   let msgauthor = message.author.id
   let codage = message.guild.id
-/*
+
 
   if (message.content.startsWith(prefix)){
     message.delete(5000)
-    if(codage !== "527263112664055826"){
+    /*if(codage !== "527263112664055826"){
     var Maintenance_embed = new Discord.RichEmbed()
         .setColor("ff00e8")
         .setTitle("Jiffeo Maintenance")
         .addField("Information :", "Le bot et fermée pour maintenance, désoler pour cette gêne occasionnée")
         .setTimestamp()
-    message.reply(Maintenance_embed).then (m => m.delete(10000));
-  /*let commandefile = bot.commands.get(cmd.slice(prefix.length));
+        message.reply(Maintenance_embed).then (m => m.delete(10000));*/
+  let commandefile = bot.commands.get(cmd.slice(prefix.length));
   if(commandefile) commandefile.run(bot,message,Args);
     }else{
       let commandefile = bot.commands.get(cmd.slice(prefix.length));
       if(commandefile) commandefile.run(bot,message,Args);
     }
-  }*/
+  if(!message.content.startsWith(prefix)){
+    if(cooldown_coins.has(message.author.id)){
+      return;
+    }else{
+      let name = message.author.username
+      let serv = message.guild.name
+      let coin = 1;
+      console.log("+ "+ coin + " Coins pour " + name + "#"+message.author.discriminator + " ( "+serv+" )")
+      cooldown_coins.add(message.author.id)
+      Money.findOne({
+      userID: message.author.id,
+  }, (err, money) =>{
+    if(err) console.log(err);
+      if(!money){
+        cooldown_coins.add(message.author.id)
+        const newMoney = new Money({
+         userID: message.author.id,
+          coins: coin
+        })
+      newMoney.save().catch(err => console.log(err)) 
+    }else{
+      money.coins = money.coins + coin;
+      money.save()
+    }
+  })
+    }
+  }
 
   
                
@@ -202,29 +228,8 @@ bot.on("message", async message => {
 
 if(message.author.bot)return;
 
-if(cooldown_coins.has(message.author.id)){
-  return;
-}else{
- // cooldown_coins.add(message.author.id)
- let name = message.author.username
-  let coin = 1;
-  console.log("+ "+ coin + " Coins pour " + name + "#"+message.author.discriminator)
-  Money.findOne({
-    userID: message.author.id,
-  }, (err, money) =>{
-    if(err) console.log(err);
-    if(!money){
-      const newMoney = new Money({
-        userID: message.author.id,
-        coins: coin
-      })
-      newMoney.save().catch(err => console.log(err)) 
-    }else{
-      money.coins = money.coins + coin;
-      money.save()
-    }
-  })
-}
+
+
 
 if(message.content == prefix + "coins"){
   
@@ -490,5 +495,8 @@ function Timer(Combien, mois, seconds, heure, Jours, minutes){
 };
 function Chan(Combien, mois, seconds, heure, Jours, minutes){
 };
+setTimeout(() => {
+  cooldown_coins.delete(message.author.id)
+}, scds_coins * 1000);
 
 bot.login(config.Token);
