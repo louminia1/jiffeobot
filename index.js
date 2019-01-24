@@ -191,6 +191,7 @@ bot.on("message", async message => {
       let commandefile = bot.commands.get(cmd.slice(prefix.length));
       if(commandefile) commandefile.run(bot,message,Args);
     }
+    
   if(!message.content.startsWith(prefix)){
     if(cooldown_coins.has(message.author.id)){
       return;
