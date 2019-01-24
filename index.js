@@ -162,13 +162,17 @@ bot.on('guildMemberAdd', member => {
 bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
   })
+bot.on("messageDelete", async message => {
+ console.log('Le message delete')
+})
 
 bot.on("message", async message => { 
-  const args = message.content.slice(bot.config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-  const cmd = bot.commands.get(command);
-  if (!cmd) return;
-  cmd.run(client, message, args);
+  let msgarray = message.content.split(" ");
+  let cmd = msgarray[0];
+  let Args = msgarray.slice(1);
+
+  let commandefile = bot.commands.get(cmd.slice(prefix.length));
+  if(commandefile) commandefile.run(bot,message,Args);
 
 })
  
