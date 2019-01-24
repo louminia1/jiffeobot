@@ -6,7 +6,7 @@ const path = require("path");
 class websoket {
     constructor(token, port, client) {
         this.token = token
-        this.clien = client
+        this.client = client
 
         this.app = express()
         this.app.engine('hbs', hbs({
