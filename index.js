@@ -163,9 +163,6 @@ bot.on('guildMemberRemove', member => {
   })
 
 bot.on("message", async message => {
-  setTimeout(() => {
-    cooldown_coins.delete(message.author.id)
-  }, scds_coins * 1000 ) 
   
   if(message.author.bot) return;
   
@@ -191,7 +188,7 @@ bot.on("message", async message => {
       let commandefile = bot.commands.get(cmd.slice(prefix.length));
       if(commandefile) commandefile.run(bot,message,Args);
     }
-    
+
   if(!message.content.startsWith(prefix)){
     if(cooldown_coins.has(message.author.id)){
       return;
