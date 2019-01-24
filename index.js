@@ -164,6 +164,11 @@ bot.on('guildMemberRemove', member => {
   })
 
 bot.on("message", async message => { 
+  const args = message.content.slice(bot.config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  const cmd = bot.commands.get(command);
+  if (!cmd) return;
+  cmd.run(client, message, args);
 
 })
  
