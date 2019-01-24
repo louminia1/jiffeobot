@@ -21,6 +21,8 @@ const db = require('./Modules/Utils/keys').MongoURI;
 mongoose.connect(db, {useNewUrlParser: true})
 .then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err));
+//Model Mongodb
+const Money = require("./Modules/Model/Money.js")
 
 bot.on("ready", async () => {
   let bot_status = "dnd"
@@ -191,43 +193,91 @@ bot.on("message", async message => {
     }
   }*/
 
-                
+  
+               
                   
   
 
 //Data beans
 
 if(message.author.bot)return;
+
 if(cooldown_coins.has(message.author.id)){
   return;
 }else{
-  if (!db.get("coins").find({user: msgauthor}).value()){
-    db.get("coins").push({user: msgauthor, coins: 1}).write();
-    cooldown_coins.add(message.author.id);
-  }else{
-    var usercoinsdb = db.get("coins").filter({user: msgauthor}).find('coins').value();
-    console.log(usercoinsdb);
-    var usercoins = Object.values(usercoinsdb)
-    console.log(usercoins);
-    console.log(`Nombre de beans : ${usercoins[1]}`)
-
-    db.get("coins").find({user: msgauthor}).assign({user: msgauthor, coins: usercoins[1] += 1}).write();
-    cooldown_coins.add(message.author.id);
-  }
+ // cooldown_coins.add(message.author.id)
+ let name = message.author.username
+  let coin = 1;
+  console.log("+ "+ coin + " Coins pour " + name + "#"+message.author.discriminator)
+  Money.findOne({
+    userID: message.author.id,
+  }, (err, money) =>{
+    if(err) console.log(err);
+    if(!money){
+      const newMoney = new Money({
+        userID: message.author.id,
+        coins: coin
+      })
+      newMoney.save().catch(err => console.log(err)) 
+    }else{
+      money.coins = money.coins + coin;
+      money.save()
+    }
+  })
 }
 
-if(message.content === prefix + "test"){
-  bot.guilds.defaults.map(serv =>{
-    var serveur = serv.guild.name
-    message.guild.members.forEach(member => {
+if(message.content == prefix + "coins"){
+  
+  Money.findOne({userID: message.author.id},(err, money) => {
+    if(err) console.log(err);
+    message.channel.send('Vous avait ' + money.coins + " coins")
+    console.log('Vous avait ' + money.coins + " coins")
+  })
+}
+/*
+if(message.content === prefix + "test"){ 
+  var guilds = bot.guilds;
+    for(var i = 0; i< bot.guilds.size;  i++){
+      console.log(guilds[i])
+      //for(var y = 0; i < bot.guilds[i].memberCount ; y++){
+        //var name = bot.guilds[i].member[y].name
+        //console.log(`Message pour`)
+        //console.log(`Message pour ${name} serveur (${serveur}) ( ${nombre} sur ${nombre_max})`)
+      //}
+    }
+  }*/
+  
+
+    /*message.guild.members.forEach(member => {
       var nombre_max = member.user.size
       var nombre = 0;
       var name = member.displayName
       console.log(`Message pour ${name} serveur (${serveur}) ( ${nombre} sur ${nombre_max})`)
       var nombre = nombre + 1
-    })
+    })*/
+
+    if(message.content == prefix + "Activer"){
+      message.delete(5000)
+      var pseudo = message.author.username
+      var pseudo_id = message.author.id
+      var serveur = message.guild.name
+      console.log(`Le serveur ${serveur} à etait activer. Par ${pseudo} id ${pseudo_id}`)
+      message.channel.send(`Bravo ${pseudo}. Le serveur ${serveur} à gagner 100 Jours du Serveur Golden. Le pack sera Activer des Ouverture du Bot`).then ( msg => msg.delete(10000))
+    }
+    if(message.content == prefix + "Info"){
+      message.delete(1000)
+      var info_Commands = new Discord.RichEmbed()
+      .setColor("ff7f50")
+      .setTitle("Information Bot")
+      .addField("Information", "Bonsoir, je vous informe pour une offre limiter, le pack golden 50EUR/annuel. L'offre dure 2H. le pack peut être offert pendant 200Jours, il suffit d'héberger le bot sur vôtre discord puits faire la commande !!Activer, une fois que le bot répondra cela enverra un message et votre serveur sera retenu. Quand le message sera supprimé offre sera arreter. Je vous souhaite une bonne fin de journée. ")
+      .addField("Attention", "toutes personnes fesant plusieurs fois la meme commande, le pack sera annuler. Pour plus info contacter Louminia#9339")
+      .addField("Lien du bot", "https://discordapp.com/api/oauth2/authorize?client_id=525017193113452545&permissions=8&scope=bot")
+      .setTimestamp()
+      message.channel.send(info_Commands).then ( message => { message.delete(7200000)})
+      /*7200000*/
+    }
   })
-}
+
 
 /*
 if (message.content === prefix + "beans"){
@@ -433,7 +483,7 @@ const voiceChannel = message.member.voiceChannel;
           }
         }
         */
-      });
+ 
 
 function Timer(Combien, mois, seconds, heure, Jours, minutes){
   
