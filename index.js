@@ -23,6 +23,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 .catch(err => console.log(err));
 //Model Mongodb
 const Money = require("./Modules/Model/Money.js")
+const infoMP = require("./Modules/Model/Vague.js")
 
 bot.on("ready", async () => {
   let bot_status = "dnd"
@@ -162,17 +163,80 @@ bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
   })
 
-bot.on("message", async message => {
+bot.on("message", async message => { 
+
+  if(message.content == prefix + "Liste"){
+    message.delete(1000)
+    message.author.createDM().then (channel => {
+      let Lis = bot.users.size
+      var List_embed = new Discord.RichEmbed()
+        .setColor("ff9000")
+        .addField("Liste :󠂪󠂪 ", `${Lis} Users`)
+    message.channel.sendMessage(List_embed).then ( message => {message.delete(15000)});
+    })
+  }
+
+  if(message.content == prefix + "générate"){
+    message.delete(500)
+    message.guild.members.forEach(member => {
+      var defaulte = false;
+      var pseudo = member.user.username
+      var ID = member.id
+      infoMP.findOne({
+        userID: ID,
+        }, (err, infomp) =>{
+          if(err) console.log(err);
+          if(!infomp){
+            console.log(pseudo + " create")
+            const newvmp = new infoMP({
+           userID: ID,
+           vague: defaulte
+          })
+        newvmp.save().catch(err => console.log(err)) 
+        }else{
+          console.log(pseudo + " deja create")
+        }})
+    })
+   }
+
+   if(message.content == prefix + "invite"){
+     message.delete(1000)
+     message.reply("https://discordapp.com/api/oauth2/authorize?client_id=525017193113452545&permissions=8&scope=bot")
+   }
+    
   
-  if(message.author.bot) return;
+
+
+   if(message.content == prefix + "global"){
+    message.delete(1000)
+    let text = message.content.slice('!!global'.length);
+    var Global_Message = new Discord.RichEmbed()
+        .setColor("ff7f50")
+        .setTitle("Information")
+        .addField("info : ", `Hey,
+        J'espère que tu vas bien!! Je viens t'informer du lancement d'une nouvelle plateforme de live video streaming nouvelle génération Jiffeo . Nous sommes en train de créer un discord pour son lancement, je t'invite à le rejoindre pour en savoir un peu plus, et co-créer avec nous l'avenir de JIFFEO
+        À bientôt  :smiley: sur le serveur de lancement JIFFEO`)
+        .addField("Lien discord : ", "https://www.discord.me/jiffeo")
+        .setTimestamp()
+    message.guild.members.forEach(member => {
+          if (member.id != bot.user.id && !member.user.bot) member.send(Global_Message).then ( message => { message.delete(1800000)})
+        console.log(`Message envoyer à ${member.user.username}`)
+    })
+    }
+
+    
+
+});
   
+ // if(message.author.bot) return;
+  /*
   let msgarray = message.content.split(" ");
   let cmd = msgarray[0];
   let Args = msgarray.slice(1);
   let msgauthor = message.author.id
-  let codage = message.guild.id
+  let codage = message.guild.id*/
 
-
+/*
   if (message.content.startsWith(prefix)){
     message.delete(5000)
     /*if(codage !== "527263112664055826"){
@@ -181,7 +245,7 @@ bot.on("message", async message => {
         .setTitle("Jiffeo Maintenance")
         .addField("Information :", "Le bot et fermée pour maintenance, désoler pour cette gêne occasionnée")
         .setTimestamp()
-        message.reply(Maintenance_embed).then (m => m.delete(10000));*/
+        message.reply(Maintenance_embed).then (m => m.delete(10000));
   let commandefile = bot.commands.get(cmd.slice(prefix.length));
   if(commandefile) commandefile.run(bot,message,Args);
     }else{
@@ -216,27 +280,29 @@ bot.on("message", async message => {
   })
     }
   }
+*/
 
   
+  
+
+
+
+
+
+  
+
                
                   
   
 
 //Data beans
 
-if(message.author.bot)return;
+//if(message.author.bot)return;
 
 
 
-
-if(message.content == prefix + "coins"){
-  
-  Money.findOne({userID: message.author.id},(err, money) => {
-    if(err) console.log(err);
-    message.channel.send('Vous avait ' + money.coins + " coins")
-    console.log('Vous avait ' + money.coins + " coins")
-  })
-}
+/*
+*/
 /*
 if(message.content === prefix + "test"){ 
   var guilds = bot.guilds;
@@ -258,7 +324,7 @@ if(message.content === prefix + "test"){
       console.log(`Message pour ${name} serveur (${serveur}) ( ${nombre} sur ${nombre_max})`)
       var nombre = nombre + 1
     })*/
-
+/*
     if(message.content == prefix + "Activer"){
       message.delete(5000)
       var pseudo = message.author.username
@@ -277,9 +343,9 @@ if(message.content === prefix + "test"){
       .addField("Lien du bot", "https://discordapp.com/api/oauth2/authorize?client_id=525017193113452545&permissions=8&scope=bot")
       .setTimestamp()
       message.channel.send(info_Commands).then ( message => { message.delete(7200000)})
-      /*7200000*/
-    }
-  })
+      /*7200000
+    }*/
+  
 
 
 /*

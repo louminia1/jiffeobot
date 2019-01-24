@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, Args) => {
                         .addField(`${kv03}`, `**------------------------------------------------------------**`)
                         .setTimestamp()
                   bot.channels.findAll('name', 'jiffeo-interserveur').map(channel => channel.send(tchat_embed))
-                  message.delete();
+                  message.delete(1000)
                             }
 
 module.exports.help = {
