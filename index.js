@@ -105,9 +105,6 @@ bot.on("message", async message => {
   if(commandefile) commandefile.run(bot,message,Args);
 
 
-  if(message.content){
-    message.channel.id == ""
-  }
 
 })
  
