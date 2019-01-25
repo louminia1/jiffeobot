@@ -27,13 +27,9 @@ const infoMP = require("./Modules/Model/Vague.js")
 const CFG = require("./Modules/Model/config.js")
 
 bot.on("ready", async () => {
-  let bot_status = "dnd"
-  let i = 0
   console.log(" ");
-  bot.user.setStatus(bot_status);
   console.log(`Logged in as ${bot.user.tag}!`);
   console.log(`Nombre de serveur: ${bot.guilds.size} Installer `);
-  //console.log(`${bot.guild.id}`);
   console.log(" ");
   console.log("----------");
   console.log(" ");
@@ -50,31 +46,7 @@ bot.on("ready", async () => {
   console.log(AFF.AFCH6);
   console.log(" ");
   console.log("----------");
-  let status = [
-    "[          ]",
-    "[=         ]",
-    "[==        ]",
-    "[===       ]",
-    "[====      ]",
-    "[=====     ]",
-    "[======    ]",
-    "[=======   ]",
-    "[========  ]",
-    "[========= ]",
-    "[==========]",
-  ]
-  setInterval(function() {
-    if(status[i] === "[          ]" || status[i] === "[=         ]" || status[i] === "[==        ]" || status[i] === "[===       ]" || status[i] === "[====      ]" || status[i] === "[=====     ]" || status[i] === "[======    ]" || status[i] === "[=======   ]" || status[i] === "[========  ]" || status[i] === "[========= ]" || status[i] === "[==========]"){
-      i = i + 1
-      if (i > 11){
-        return;
-      }else if(status[i] === "[==========]"){
-        bot.user.setStatus("online");
-      }else if(i < 11){
-        bot.user.setActivity(status[i], {type: "WATCHING"});
-      }
-    }
-  }, 3000);
+  
 
   let Statuses = [
     `help : ${prefix}help | ${bot.guilds.size} Serveur`,
@@ -87,38 +59,6 @@ bot.on("ready", async () => {
     bot.user.setActivity(status, {type: "WATCHING"});
   }, 30000);
 
-  setInterval(function(){
-    var date = new Date();
-    var Combien = date.getDate();
-    var mois = date.getMonth();
-    var seconds = date.getSeconds();
-    var jour = date.getDay();
-    var heure = date.getHours();
-    var minutes = date.getMinutes();
-    if(jour === 1){
-      var Jours = "Lundi"
-    };
-    if(jour === 2){
-      var Jours = "Mardi"
-    };
-    if(jour === 3){
-      var Jours = "Mercredi"
-    };
-    if(jour === 4){
-      var Jours = "Jeudi"
-    };
-    if(jour === 5){
-      var Jours = "Vendredi"
-    };
-    if(jour === 6){
-      var Jours = "Samedi"
-    };
-    if(jour === 7){
-      var Jours = "Dimanche"
-    };
-    Timer(Combien, mois, seconds, heure, Jours, minutes);
-    Chan(heure, minutes, seconds);
-  }, 500)
 });
 
 
@@ -141,23 +81,12 @@ fs.readdir("./Modules/Commands/", (err, files) => {
 })
 
 bot.on('guildMemberAdd', member => {
-  var serv = member.guild.id
-  if(serv == "509790078969839628"){
-    var bienvenue_embed = new Discord.RichEmbed()
-        .setColor("ff00e8")
-        .setTitle("Bienvenue sur jiffeo")
-        .setThumbnail(`${message.author.displayAvatarURL}`)
-        .addField("Message ", "Hey, bienvenue sur le server Jiffeo, tu peux regarder ou lancer des Lives. Le CEO de jiffeo t'a fait une petite video de Presentation la voila ! :smiley:Hey ")
-        .addField("Vidéo explication", "https://www.youtube.com/watch?v=ej35UbHKksU&feature=youtu.be")
-        .setTimestamp()
-    member.author.send(bienvenue_embed)
+  if(bot.guild.id == "509790078969839628"){
+    const role = member.guild.roles.find("name", "Membre de Jiffeo");
+    member.addRole(role);
   }
-  
-  const channel = member.guild.channels.find("name", "général");
-  const role = member.guild.roles.find("name", "Membre de Jiffeo");
   if(!channel)return;
   channel.sendMessage(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
-  member.addRole(role);
   })
 
 bot.on('guildMemberRemove', member => {
@@ -182,12 +111,6 @@ bot.on("message", async message => {
 
 })
  
-
-function Timer(Combien, mois, seconds, heure, Jours, minutes){
-  
-};
-function Chan(Combien, mois, seconds, heure, Jours, minutes){
-};
 function Filtre(message){
 
 }
