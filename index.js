@@ -123,7 +123,7 @@ bot.on("ready", async () => {
 
 
 
-
+//Load .js 
 
 fs.readdir("./Modules/Commands/", (err, files) => {
   if(err) console.log(err);
@@ -142,7 +142,7 @@ fs.readdir("./Modules/Commands/", (err, files) => {
 
 bot.on('guildMemberAdd', member => {
   var serv = member.guild.id
-  if(serv !== "509790078969839628"){
+  if(serv == "509790078969839628"){
     var bienvenue_embed = new Discord.RichEmbed()
         .setColor("ff00e8")
         .setTitle("Bienvenue sur jiffeo")
@@ -151,8 +151,8 @@ bot.on('guildMemberAdd', member => {
         .addField("Vidéo explication", "https://www.youtube.com/watch?v=ej35UbHKksU&feature=youtu.be")
         .setTimestamp()
     member.author.send(bienvenue_embed)
-
   }
+  
   const channel = member.guild.channels.find("name", "général");
   const role = member.guild.roles.find("name", "Membre de Jiffeo");
   if(!channel)return;
@@ -164,6 +164,9 @@ bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
   })
 
+
+  // commande 
+
 bot.on("message", async message => { 
   let msgarray = message.content.split(" ");
   let cmd = msgarray[0];
@@ -171,6 +174,11 @@ bot.on("message", async message => {
 
   let commandefile = bot.commands.get(cmd.slice(prefix.length));
   if(commandefile) commandefile.run(bot,message,Args);
+
+
+  if(message.content){
+    message.channel.id == ""
+  }
 
 })
  
@@ -180,5 +188,10 @@ function Timer(Combien, mois, seconds, heure, Jours, minutes){
 };
 function Chan(Combien, mois, seconds, heure, Jours, minutes){
 };
+function Filtre(message){
+
+}
+
+
 
 bot.login(config.Token);
