@@ -24,6 +24,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 //Model Mongodb
 const Money = require("./Modules/Model/Money.js")
 const infoMP = require("./Modules/Model/Vague.js")
+const CFG = require("./Modules/Model/config.js")
 
 bot.on("ready", async () => {
   let bot_status = "dnd"
@@ -162,9 +163,6 @@ bot.on('guildMemberAdd', member => {
 bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
   })
-bot.on("messageDelete", async message => {
- console.log('Le message delete')
-})
 
 bot.on("message", async message => { 
   let msgarray = message.content.split(" ");
@@ -182,8 +180,5 @@ function Timer(Combien, mois, seconds, heure, Jours, minutes){
 };
 function Chan(Combien, mois, seconds, heure, Jours, minutes){
 };
-setTimeout(() => {
-  cooldown_coins.delete(message.author.id)
-}, scds_coins * 1000);
 
 bot.login(config.Token);
