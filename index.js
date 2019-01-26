@@ -80,7 +80,7 @@ fs.readdir("./Modules/Commands/", (err, files) => {
 
 
 bot.on('guildMemberAdd', member => {
-  
+
   if(member.guild.id == "509790078969839628"){
     channel.sendMessage(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
   }
