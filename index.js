@@ -18,6 +18,7 @@ const db = require('./Modules/Utils/keys').MongoURI;
 mongoose.connect(db, {useNewUrlParser: true})
 .then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err));
+
 //Model Mongodb
 //const Money = require("./Modules/Model/Money.js")
 //const infoMP = require("./Modules/Model/Vague.js")
