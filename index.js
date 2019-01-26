@@ -4,14 +4,11 @@ const fs = require("fs");
 const STF = require("./Modules/Utils/Staff.json");
 const bot = new Discord.Client({disableEveryone : true});
 const prefix = ("!!")
-//const WS = require('./ws/ws.js')
 const AFF = require("./Modules/Utils/Affichage.json")
 bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
 const mongoose = require('mongoose');
-
-//var ws = new WS('123', 9000, bot)
 
 //Data Init
 
@@ -22,9 +19,9 @@ mongoose.connect(db, {useNewUrlParser: true})
 .then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err));
 //Model Mongodb
-const Money = require("./Modules/Model/Money.js")
-const infoMP = require("./Modules/Model/Vague.js")
-const CFG = require("./Modules/Model/config.js")
+//const Money = require("./Modules/Model/Money.js")
+//const infoMP = require("./Modules/Model/Vague.js")
+//const CFG = require("./Modules/Model/config.js")
 
 bot.on("ready", async () => {
   console.log(" ");
@@ -80,14 +77,17 @@ fs.readdir("./Modules/Commands/", (err, files) => {
   })
 })
 
+
 bot.on('guildMemberAdd', member => {
-  if(bot.guild.id == "509790078969839628"){
+  
+  if(member.guild.id == "509790078969839628"){
+    channel.sendMessage(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
+  }
+
+  if(member.guild.id == "509790078969839628"){
     const role = member.guild.roles.find("name", "Membre de Jiffeo");
     member.addRole(role);
   }
-  if(!channel)return;
-  channel.sendMessage(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
-  })
 
 bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
