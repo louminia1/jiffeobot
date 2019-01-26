@@ -109,7 +109,6 @@ bot.on("message", async message => {
   if(commandefile) commandefile.run(bot,message,Args);
 
 
-
 })
  
 function Filtre(message){
