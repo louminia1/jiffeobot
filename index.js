@@ -47,7 +47,7 @@ bot.on("ready", async () => {
   
 
   let Statuses = [
-    `help : ${prefix}help | ${bot.guilds.size} Serveur`,
+    `help : ${prefix}help | ${bot.guilds.size} Serveurs`,
     `${bot.user.tag}`,
     'https://jiffeo.tv/'
   ]
