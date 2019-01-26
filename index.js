@@ -90,9 +90,12 @@ bot.on('guildMemberAdd', member => {
     member.addRole(role);
   }
 
+})
+
 bot.on('guildMemberRemove', member => {
   message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
-  })
+
+  });
 
 
   // commande 
