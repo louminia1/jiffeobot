@@ -1,17 +1,17 @@
 const Discord = require("discord.js");
 const moogose = require("mongoose");
-const CFG = require("../Model/config")
+const CFS = require("../Model/config")
 
 module.exports.run = async (bot, message, Args) => {
     let ID = message.guild.id
     let name = message.guild.name
     let prefix = "!!";
-    CFG.findOne({
+    CFS.findOne({
         bot_ID: ID,
     }, (err, cfg) =>{
       if(err) console.log(err);
         if(!cfg){
-          const newcfg = new CFG({
+          const newcfs = new CFG({
             bot_name: name,
             bot_ID: ID,
             bot_Prefix: prefix,
@@ -20,56 +20,113 @@ module.exports.run = async (bot, message, Args) => {
             bot_Info: " ",
             bot_Pack: "Gratuit"
           })
-        newcfg.save().catch(err => console.log(err))
+        newcfs.save().catch(err => console.log(err))
         }
     })
     if(Args[0] == "help"){
         message.channel.send("test")
     }
     if(Args[0] == "stats"){
-        CFG.findOne({bot_ID: ID,}, (err, cfg) =>{
-            var info_embed = new Discord.Richembed()
+        CFS.findOne({bot_ID: message.guild.id,}, (err, cfs) =>{
+            if(err) console.log(err)
+            var info_embed = new Discord.RichEmbed()
                 .setColor("ff00e8")
                 .setTitle("Jiffeo Maintenance")
-                .setThumbnail(`${message.guild.displayAvatarURL}`)
-                .addField("Bot Name :", cfg.bot_name)
-                .addField("Bot id :", cfg.bot_ID)
-                .addField("Bot prefix :", cfg.bot_prefix)
-                .addField("Bot Channel log :", cfg.bot_Error)
-                .addField("Bot Channel Error :", cfg.bot_info)
-                .addField("Bot Channel info :", cfg.bot_Pack)
-                .setTimestamp()
-             return message.channel.send(info_embed)
+                .addField("Bot Name :", cfs.bot_name)
+                .addField("Bot id :", cfs.bot_ID)
+                .addField("Bot prefix :", cfs.bot_Prefix)
+                if(cfs.bot_Log == " "){
+                    info_embed.addField("Bot Channel log :", "Désactiver (no define)")
+                }else{
+                    info_embed.addField("Bot Channel log :", cfs.bot_Log)
+                }
+                if(cfs.bot_Error == " "){
+                    info_embed.addField("Bot Channel Error :", "Désactiver (no define)")
+                }else{
+                    info_embed.addField("Bot Channel Error :", cfs.bot_Error)
+                }
+                if(cfs.bot_Info == " "){
+                    info_embed.addField("Bot Channel info :", "Désactiver (no define)")
+                }else{
+                    info_embed.addField("Bot Channel info :", cfs.bot_Info)
+                }
+                info_embed.addField("Bot Pack :", cfs.bot_Pack)
+                info_embed.setTimestamp()
+            message.channel.send(info_embed)
         })
     }
     if(Args[0] == "set"){
+
         if(Args[1] == "prefix"){
-            CFG.findOne({
+            CFS.findOne({
                 bot_ID: ID,
-            }, (err, cfg) =>{
+            }, (err, cfs) =>{
               if(err) console.log(err);
-              if(!Args[2]){
-                  message.reply(cfg.bot_Prefix + "config set prefix (prefix)");
-              }
-              if(Args[2]){
-                cfg.bot_Prefix = Args[2]
-                cfg.save()
-            }
+                if(!Args[2]){
+                     message.reply(cfs.bot_Prefix + "config set prefix (prefix)");
+                }
+                if(Args[2]){
+                cfs.bot_Prefix = Args[2]
+                cfs.save()
+                return message.channel.send("Le prefix du serveur a bien était changer, prefix : " + cfs.bot_Prefix)
+                }
             })
         }
+
         if(Args[1] == "log"){
-            
+            CFS.findOne({
+                bot_ID: ID,
+            }, (err, cfs) =>{
+                if(err) console.log(err);
+                if(!Args[2]){
+                    message.reply(cfs.bot_Log + "config set log (channelID)");
+                }
+                if(Args[2]){
+                    cfs.bot_Log = Args[2]
+                    cfs.save()
+                    return message.channel.send("Le channel logs a bien etait créé, IDchannel : " + cfs.bot_Log)
+                }
+            })
         }
+            
+          
         if(Args[1] == "error"){
-            
+            CFS.findOne({
+                bot_ID: ID,
+            }, (err, cfs) =>{
+                if(err) console.log(err);
+                if(!Args[2]){
+                    message.reply(cfs.bot_Error + "config set error (channelID)");
+                }
+                if(Args[2]){
+                    cfs.bot_Error = Args[2]
+                    cfs.save()
+                    return message.channel.send("Le channel error a bien etait créé, IDchannel : " + cfs.bot_Error)
+                }
+            })
         }
+
         if(Args[1] == "info"){
-            
+            CFS.findOne({
+                bot_ID: ID,
+            }, (err, cfs) =>{
+                if(err) console.log(err);
+                if(!Args[2]){
+                    message.reply(cfs.bot_Info + "config set info (channelID)");
+                }
+                if(Args[2]){
+                    cfs.bot_Info = Args[2]
+                    cfs.save()
+                    return message.channel.send("Le channel info a bien etait créé, IDchannel : " + cfs.bot_Info)
+                }
+            })
         }
+    }
         
     }
+        
 
-}
+
 
 module.exports.help = {
     name: "config"

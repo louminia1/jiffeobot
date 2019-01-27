@@ -22,7 +22,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 //Model Mongodb
 //const Money = require("./Modules/Model/Money.js")
 //const infoMP = require("./Modules/Model/Vague.js")
-//const CFG = require("./Modules/Model/config.js")
+const CFS = require("./Modules/Model/config.js")
 
 bot.on("ready", async () => {
   console.log(" ");
@@ -93,7 +93,7 @@ bot.on('guildMemberAdd', member => {
 })
 
 bot.on('guildMemberRemove', member => {
-  message.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
+  member.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
 
   });
 
@@ -101,13 +101,39 @@ bot.on('guildMemberRemove', member => {
   // commande 
 
 bot.on("message", async message => { 
-  let msgarray = message.content.split(" ");
-  let cmd = msgarray[0];
-  let Args = msgarray.slice(1);
+  let guilde = message.guild.id 
+  let Sname = message.guild.name
+  CFS.findOne({})
 
-  let commandefile = bot.commands.get(cmd.slice(prefix.length));
-  if(commandefile) commandefile.run(bot,message,Args);
+  if(message.content){
+    CFS.findOne({
+      bot_ID: guilde,
+    }, (err, cfs) =>{
+    if(err) console.log(err);
+      if(!cfs){
+        const newcfs = new CFS({
+          bot_name: Sname,
+          bot_ID: guilde,
+          bot_Prefix: "!!",
+          bot_Log: " ",
+          bot_Error: " ",
+          bot_Info: " ",
+          bot_Pack: "Gratuit"
+        })
+      newcfs.save().catch(err => console.log(err))
+      }
+    })
+    let msgarray = message.content.split(" ");
+    let cmd = msgarray[0];
+    let Args = msgarray.slice(1);
+    CFS.findOne({bot_ID: guilde}, (err, cfs) => {
+      if(err) console.log(err);
+      let prefixe = cfs.bot_Prefix
+      let commandefile = bot.commands.get(cmd.slice(prefixe.length));
+      if(commandefile) commandefile.run(bot,message,Args);
+    })
 
+  }
 
 })
  
