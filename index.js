@@ -28,6 +28,7 @@ bot.on("ready", async () => {
   console.log(" ");
   console.log(`Logged in as ${bot.user.tag}!`);
   console.log(`Nombre de serveur: ${bot.guilds.size} Installer `);
+  console.log(`Nombre de users: ${bot.users.size} Installer `);
   console.log(" ");
   console.log("----------");
   console.log(" ");
