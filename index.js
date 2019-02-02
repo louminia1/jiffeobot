@@ -9,6 +9,7 @@ bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
 const mongoose = require('mongoose');
+let numberserveur = 10000
 
 //Data Init
 
@@ -20,7 +21,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 .catch(err => console.log(err));
 
 //Model Mongodb
-//const Money = require("./Modules/Model/Money.js")
+const Money = require("./Modules/Model/Money.js")
 //const infoMP = require("./Modules/Model/Vague.js")
 const CFS = require("./Modules/Model/config.js")
 
@@ -31,10 +32,12 @@ bot.on("ready", async () => {
   console.log(" ");
   console.log("----------");
   console.log(" ");
-  console.log(bot.guilds.map(r => r.name + ` | **${r.memberCount}** members (Jifféo Familly)`));
-  console.log(" ");
+  //console.log(bot.guilds.map(r => r.name + ` | **${r.memberCount}** members (Jifféo Familly)`));
+  //let guilde = bot.guilds.filter(g => g.memberCount <= 500).map(g => g.name);
+
+
   
-  console.log("----------");
+
   console.log(" ");
   console.log(AFF.AFCH1);
   console.log(AFF.AFCH2);
@@ -44,8 +47,6 @@ bot.on("ready", async () => {
   console.log(AFF.AFCH6);
   console.log(" ");
   console.log("----------");
-  
-
   let Statuses = [
     `help : ${prefix}help | ${bot.guilds.size} Serveurs`,
     `${bot.user.tag}`,
@@ -82,7 +83,7 @@ fs.readdir("./Modules/Commands/", (err, files) => {
 bot.on('guildMemberAdd', member => {
 
   if(member.guild.id == "509790078969839628"){
-    channel.sendMessage(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
+    //member.(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
   }
 
   if(member.guild.id == "509790078969839628"){
@@ -90,12 +91,40 @@ bot.on('guildMemberAdd', member => {
     member.addRole(role);
   }
 
+
 })
 
 bot.on('guildMemberRemove', member => {
-  member.author.sendMessage(`:frowning2: ${member.user.username} a quitté le serveur :( `);
+  console.log(member + "Vient de partir !")
+});
+bot.on('messageupdate', async(oldMessage, newMessage) =>{
+ 
+})
+bot.on('messageDelete', async message => {
+  CFS.findOne({ bot_ID: message.guild.id}
+    , (err, cfs) =>{
+  if(err) console.log(err);
+    if(cfs.bot_Log == " "){
+      return;
+    }else{
+      let serveur = cfs.bot_Log
+      let logs = bot.channels.get(serveur)
+      var messagedelete_embed = new Discord.RichEmbed()
+        .setColor("ff00e8")
+        .setTitle("Jiffeo Logs")
+        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setThumbnail(message.author.displayAvatarURL)
+        .setDescription(":gear: Message deleted")
+        .addField("Message", message.content, true)
+        .setTimestamp()
+      logs.send(messagedelete_embed)
 
-  });
+
+
+    }
+  })
+
+})
 
 
   // commande 
@@ -103,7 +132,20 @@ bot.on('guildMemberRemove', member => {
 bot.on("message", async message => { 
   let guilde = message.guild.id 
   let Sname = message.guild.name
-  CFS.findOne({})
+  /*
+  if(message.content){
+    Money.findOne({Numero: "#" + num}
+            , (err, money) =>{
+            if(err) console.log(err);
+                if(!money){
+                    const newins = new INS({
+                    })
+                    newins.save().catch(err => console.log(err
+                }
+            
+    })
+  }*/
+
 
   if(message.content){
     CFS.findOne({
@@ -128,9 +170,13 @@ bot.on("message", async message => {
     let Args = msgarray.slice(1);
     CFS.findOne({bot_ID: guilde}, (err, cfs) => {
       if(err) console.log(err);
-      let prefixe = cfs.bot_Prefix
-      let commandefile = bot.commands.get(cmd.slice(prefixe.length));
-      if(commandefile) commandefile.run(bot,message,Args);
+      if(cfs.bot_Prefix == " "){
+        return;
+      }else{
+        let prefixe = cfs.bot_Prefix
+        let commandefile = bot.commands.get(cmd.slice(prefixe.length));
+        if(commandefile) commandefile.run(bot,message,Args);
+      }
     })
 
   }
