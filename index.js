@@ -33,7 +33,7 @@ bot.on("ready", async () => {
   console.log(" ");
   console.log("----------");
   console.log(" ");
-  //console.log(bot.guilds.map(r => r.name + ` | **${r.memberCount}** members (Jifféo Familly)`));
+  console.log(bot.guilds.map(r => r.name + ` | **${r.memberCount}** members (Jifféo Familly)`));
   //let guilde = bot.guilds.filter(g => g.memberCount <= 500).map(g => g.name);
 
 
