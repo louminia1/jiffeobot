@@ -33,16 +33,38 @@ module.exports.run = async (bot, message, Args) => {
         var verf = Args[1]
         GC.findOne({Code: verf}, (err, gc) =>{
             if(err) console.log(err)
-            if(verf !== gc.Code || verf === ""){
-                return message.channel.send('error')
+            if(verf === gc.Code){
+                gc.Code = gc.Code + 1
+                message.channel.send("1 point rajouter pour " +gc.User+" par "+ message.author.username).then (msg => { msg.delete(10000)});
             }else{
-                gc.inviter = gc.inviter + 1
-                gc.save()
+                return message.channel.send("le code et incorrect").then (msg => { msg.delete(20000)});
             }
-            message.channel.send("1 point rajouter pour " +gc.User+" par "+ message.author.username).then (msg => { msg.delete(10000)});
             
         })
     }
+    if(Args[0] === "stats"){
+        var ide = message.author.id
+        var code = Args[1]
+        if(Args[1] === "" || Args[1] === " " ){
+            return message.channel.send("Essayer : (préfix)game stats (Vôtre code)")
+        }else{
+            GC.findOne({
+                ID: ide, Code: code
+            }, (err, gc) =>{
+                if(err) console.log(err)
+                if(ide === gc.ID){
+                    if(code === gc.Code){
+                        return message.channel.send("Profil de "+gc.User+", Vous avait "+gc.inviter+" Point(s)").then (msg => { msg.delete(20000)});
+                    }else{
+                        return message.channel.send("Vôtre code n'a pas etait trouver !").then (msg => { msg.delete(20000)});
+                    }
+                }else{
+                    return message.channel.send("Vôtre profil n'a pas etait trouver !").then (msg => { msg.delete(20000)});
+                }
+
+        })
+    }
+}
 }
 
 module.exports.help = {

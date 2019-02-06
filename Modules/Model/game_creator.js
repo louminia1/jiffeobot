@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const GCchema = mongoose.Schema({
     User: String,
-    ID: Number,
+    ID: String,
     Code: String,
     inviter: Number
 })

@@ -131,21 +131,31 @@ bot.on('messageDelete', async message => {
   // commande 
 
 bot.on("message", async message => { 
-  let guilde = message.guild.id 
-  let Sname = message.guild.name
-  /*
-  if(message.content){
-    Money.findOne({Numero: "#" + num}
-            , (err, money) =>{
-            if(err) console.log(err);
-                if(!money){
-                    const newins = new INS({
-                    })
-                    newins.save().catch(err => console.log(err
-                }
-            
+  //console.log(message);
+  let guilde = message.channel.guild.id;
+  let Sname = message.name;
+  let id = message.author.id;
+
+if(message.content){
+  if(cooldown_coins.has(message.author.id)){ return;}
+    Money.findOne({userID: message.author.id}
+      , (err, money) => {
+      if(err) console.log(err);
+      if(!money){
+          const newMoney = new Money({
+            userID: message.author.id,
+            piece: 0
+          })
+          newMoney.save().catch(err => console.log(err));
+          cooldown_coins.add(message.author.id)
+          console.log("Porte Money crée pour "+message.author.username)
+      }else{
+          console.log("Porte Money de "+message.author.username+ ", Gagne 1 piece. Total : "+ money.piece+" Piece")
+          money.piece = money.piece + 1
+          money.save()
+      }
     })
-  }*/
+}
 
 
   if(message.content){
@@ -181,12 +191,12 @@ bot.on("message", async message => {
     })
 
   }
-
+  setTimeout(() => {
+    cooldown_coins.delete(message.author.id)
+  }, scds_coins * 1000)
 })
- 
-function Filtre(message){
 
-}
+
 
 
 
