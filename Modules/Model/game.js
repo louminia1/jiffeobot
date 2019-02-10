@@ -4,7 +4,8 @@ const GCchema = mongoose.Schema({
     User: String,
     ID: String,
     Code: String,
-    inviter: Number
+    inviter: Number,
+    Point: Number
 })
 
-module.exports = mongoose.model("Gcreator", GCchema);
+module.exports = mongoose.model("Games", GCchema);

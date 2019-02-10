@@ -116,7 +116,7 @@ bot.on('messageDelete', async message => {
         .setAuthor(message.author.tag, message.author.displayAvatarURL)
         .setThumbnail(message.author.displayAvatarURL)
         .setDescription(":gear: Message deleted")
-        .addField("Message", message.content, true)
+        .addField("Message", `${message.content}`, true)
         .setTimestamp()
       logs.send(messagedelete_embed)
 
