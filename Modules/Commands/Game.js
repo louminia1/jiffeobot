@@ -48,6 +48,7 @@ module.exports.run = async (bot, message, Args) => {
                         gc.inviter = gc.inviter + 1
                         gc.save()
                         message.member.addRole(grade);
+
                     }else{
                         message.channel.send("vous avait deja voter !").then ( msg => msg.delete(5000))
                     }

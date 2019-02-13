@@ -12,12 +12,14 @@ module.exports.run = async (bot, message, Args) => {
         var Help_Jeux = new Discord.RichEmbed()
         .setColor("ff0000")
         .setTitle("︵‿︵‿︵‿︵ 🎳 Jiffeo Jeux 🏓 ︵‿︵‿︵‿︵")
+        .addField("Jeux d'invite", "!!game create")
         .setTimestamp()
         channel.send(Help_Jeux).then ( message => { message.delete(100000)})
 
         var Help_Options = new Discord.RichEmbed()
         .setColor("00ffd8")
         .setTitle("︵‿︵‿︵‿︵ 🗂️ Jiffeo Options 📊 ︵‿︵‿︵‿︵")
+        .addField("Config", "!!config")
         .setTimestamp()
         channel.send(Help_Options).then ( message => { message.delete(100000)})
 

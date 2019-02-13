@@ -35,8 +35,6 @@ bot.on("ready", async () => {
   console.log(" ");
   console.log(bot.guilds.map(r => r.name + ` | **${r.memberCount}** members (Jifféo Familly)`));
   //let guilde = bot.guilds.filter(g => g.memberCount <= 500).map(g => g.name);
-
-
   
 
   console.log(" ");
@@ -121,7 +119,6 @@ bot.on('messageDelete', async message => {
       logs.send(messagedelete_embed)
 
 
-
     }
   })
 
@@ -136,7 +133,7 @@ bot.on("message", async message => {
   let Sname = message.name;
   let id = message.author.id;
 
-if(message.content){
+/*if(message.content){
   if(cooldown_coins.has(message.author.id)){ return;}
     Money.findOne({userID: message.author.id}
       , (err, money) => {
@@ -155,7 +152,17 @@ if(message.content){
           money.save()
       }
     })
-}
+}*/
+  if(message.content){
+    var serveur = message.channel.guild.name
+    var serveur_id = message.channel.guild.id
+    var name = message.author.username
+    var Message = message.content
+    console.log(` `)
+    console.log(`Serveur: ${serveur}(id: ${serveur_id})\nPseudo: ${name}\nMessage: ${Message}`)
+    console.log(` `)
+  }
+
 
 
   if(message.content){
