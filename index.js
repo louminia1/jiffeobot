@@ -88,7 +88,7 @@ bot.on('guildMemberAdd', member => {
   }
 
   if(member.guild.id == "509790078969839628"){
-    const role = member.guild.roles.find("name", "Membre de Jiffeo");
+    const role = member.guild.roles.find("name", "❤️ Membre de Jiffeo");
     member.addRole(role);
   }
 
