@@ -5,6 +5,7 @@ const STF = require("./Modules/Utils/Staff.json");
 const bot = new Discord.Client({disableEveryone : true});
 const prefix = ("!!")
 const AFF = require("./Modules/Utils/Affichage.json")
+const antispam = require('discord-anti-spam');
 bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
@@ -23,6 +24,16 @@ mongoose.connect(db, {useNewUrlParser: true})
 //Model Mongodb
 
 bot.on("ready", async () => {
+	antispam(bot, {
+    warnBuffer: 4, // Maximum ammount of messages allowed to send in the interval time before getting warned.
+    maxBuffer: 6, // Maximum amount of messages allowed to send in the interval time before getting banned.
+    interval: 2000, // Amount of time in ms users can send the maxim amount of messages(maxBuffer) before getting banned. 
+    warningMessage: "S'il vous plait, arrêtez de spam !", // Message users receive when warned. (message starts with '@User, ' so you only need to input continue of it.) 
+    banMessage: "a été banni pour spam !", // Message sent in chat when user is banned. (message starts with '@User, ' so you only need to input continue of it.) 
+    maxDuplicatesWarning: 5,// Maximum amount of duplicate messages a user can send in a timespan before getting warned.
+    maxDuplicatesBan: 7, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
+    deleteMessagesAfterBanForPastDays: 7, // Deletes the message history of the banned user in x days.
+  });
   console.log(" ");
   console.log(`Logged in as ${bot.user.tag}!`);
   console.log(`Nombre de serveur: ${bot.guilds.size} Installer `);
@@ -81,7 +92,7 @@ bot.on('guildMemberAdd', member => {
   if(member.guild.id == "509790078969839628"){
     const channel = member.guild.channels.find("name", "accυeil-general-🔆");
     if(!channel) return;
-    channel.send(`Bienvenue ${member} sur le serveur Jiffeo.tv, je t'ai envoyé en message privé toutes les informations sur la plateforme de live streaming jiffeo, passes un bon moment ici :D`)
+    channel.send(`Bienvenue ${member} sur le serveur Jiffeo.tv, passes un bon moment ici :D`)
     member.send(`Hey,\nJ'ai fais une petite vidéo pour te présenter le Discord Jiffeo voilà le lien encore bienvenue :smiley: https://www.youtube.com/watch?v=ej35UbHKksU&feature=youtu.be\nLe lien vers la plateforme de live video https://jiffeo.tv/ et l'app Jiffeo https://play.google.com/store/apps/details?id=com.jiffeo.app\nÀ bientôt sur le serveur Jiffeo.tv :D\nOlomi`)
     //member.(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
   }
@@ -113,9 +124,6 @@ bot.on('messageDelete', async message => {
 
 bot.on("message", async message => { 
   //console.log(message);
-  let guilde = message.channel.guild.id;
-  let Sname = message.name;
-  let id = message.author.id;
 
 
   if(message.content){
