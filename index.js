@@ -30,8 +30,8 @@ bot.on("ready", async () => {
     interval: 2000, // Amount of time in ms users can send the maxim amount of messages(maxBuffer) before getting banned. 
     warningMessage: "S'il vous plait, arrêtez de spam !", // Message users receive when warned. (message starts with '@User, ' so you only need to input continue of it.) 
     banMessage: "a été banni pour spam !", // Message sent in chat when user is banned. (message starts with '@User, ' so you only need to input continue of it.) 
-    maxDuplicatesWarning: 3,// Maximum amount of duplicate messages a user can send in a timespan before getting warned.
-    maxDuplicatesBan: 5, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
+    maxDuplicatesWarning: 5,// Maximum amount of duplicate messages a user can send in a timespan before getting warned.
+    maxDuplicatesBan: 7, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
     deleteMessagesAfterBanForPastDays: 7, // Deletes the message history of the banned user in x days.
   });
   console.log(" ");
