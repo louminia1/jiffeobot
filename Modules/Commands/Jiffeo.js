@@ -22,5 +22,5 @@ module.exports.run = async (bot, message, Args) => {
                             }
 
 module.exports.help = {
-    name: "InterServeur"
+    name: "is"
 }
