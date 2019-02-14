@@ -79,6 +79,10 @@ fs.readdir("./Modules/Commands/", (err, files) => {
 bot.on('guildMemberAdd', member => {
 
   if(member.guild.id == "509790078969839628"){
+    const channel = member.guild.channels.find("name", "accυeil-general-🔆");
+    if(!channel) return;
+    channel.send(`Bienvenue ${member} sur le serveur Jiffeo.tv, je t'ai envoyé en message privé toutes les informations sur la plateforme de live streaming jiffeo, passes un bon moment ici :D`)
+    member.send(`Hey,\nJ'ai fais une petite vidéo pour te présenter le Discord Jiffeo voilà le lien encore bienvenue :smiley: https://www.youtube.com/watch?v=ej35UbHKksU&feature=youtu.be\nLe lien vers la plateforme de live video https://jiffeo.tv/ et l'app Jiffeo https://play.google.com/store/apps/details?id=com.jiffeo.app\nÀ bientôt sur le serveur Jiffeo.tv :D\nOlomi`)
     //member.(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
   }
 
@@ -91,6 +95,9 @@ bot.on('guildMemberAdd', member => {
 })
 
 bot.on('guildMemberRemove', member => {
+  const channel = member.guild.channels.find("name", "accυeil-general-🔆");
+    if(!channel) return;
+    channel.send(`${member} a quitté le serveur.`);
   console.log(member + "Vient de partir !")
 });
 bot.on('messageupdate', async(oldMessage, newMessage) =>{
