@@ -123,8 +123,17 @@ bot.on('messageDelete', async message => {
   // commande 
 
 bot.on("message", async message => { 
+  let messageArray = message.content.split(" ")
+  let cmd = messageArray[0]
+  let Args = messageArray.slice(1)
   //console.log(message);
 
+  if(message.content == dm ){
+    let admin1 = "252843903131189248";
+    let username = message.author.username
+    let msg = Args[0] 
+    admin1.send(`${username} : ${msg}`)
+  }
 
   if(message.content){
     var serveur = message.channel.guild.name
@@ -140,9 +149,6 @@ bot.on("message", async message => {
 
   if(message.content.startsWith(prefix)){
     let prefix = ("!!")
-    let messageArray = message.content.split(" ")
-    let cmd = messageArray[0]
-    let Args = messageArray.slice(1)
     let commandefile = bot.commands.get(cmd.slice(prefix.length));
     if(commandefile) commandefile.run(bot,message,Args);
       
