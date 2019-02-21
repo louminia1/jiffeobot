@@ -106,9 +106,6 @@ bot.on('guildMemberAdd', member => {
 })
 
 bot.on('guildMemberRemove', member => {
-  const channel = member.guild.channels.find("name", "accυeil-general-🔆");
-    if(!channel) return;
-    channel.send(`${member} a quitté le serveur.`);
   console.log(member + "Vient de partir !")
 });
 bot.on('messageupdate', async(oldMessage, newMessage) =>{
@@ -128,12 +125,6 @@ bot.on("message", async message => {
   let Args = messageArray.slice(1)
   //console.log(message);
 
-  if(message.content == dm ){
-    let admin1 = "252843903131189248";
-    let username = message.author.username
-    let msg = Args[0] 
-    admin1.send(`${username} : ${msg}`)
-  }
 
   if(message.content){
     var serveur = message.channel.guild.name
@@ -145,7 +136,9 @@ bot.on("message", async message => {
     console.log(` `)
   }
 
-
+  if(message.content.includes == "suce"){
+    message.delete(1000)
+  }
 
   if(message.content.startsWith(prefix)){
     let prefix = ("!!")
