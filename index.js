@@ -5,7 +5,7 @@ const STF = require("./Modules/Utils/Staff.json");
 const bot = new Discord.Client({disableEveryone : true});
 const prefix = ("!!")
 const AFF = require("./Modules/Utils/Affichage.json")
-const antispam = require('discord-anti-spam');
+//const antispam = require('discord-anti-spam');
 bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
@@ -24,7 +24,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 //Model Mongodb
 
 bot.on("ready", async () => {
-	antispam(bot, {
+	/*antispam(bot, {
     warnBuffer: 4, // Maximum ammount of messages allowed to send in the interval time before getting warned.
     maxBuffer: 6, // Maximum amount of messages allowed to send in the interval time before getting banned.
     interval: 2000, // Amount of time in ms users can send the maxim amount of messages(maxBuffer) before getting banned. 
@@ -33,7 +33,7 @@ bot.on("ready", async () => {
     maxDuplicatesWarning: 5,// Maximum amount of duplicate messages a user can send in a timespan before getting warned.
     maxDuplicatesBan: 7, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
     deleteMessagesAfterBanForPastDays: 7, // Deletes the message history of the banned user in x days.
-  });
+  });*/
   console.log(" ");
   console.log(`Logged in as ${bot.user.tag}!`);
   console.log(`Nombre de serveur: ${bot.guilds.size} Installer `);
