@@ -136,9 +136,7 @@ bot.on("message", async message => {
     console.log(` `)
   }
 
-  if(message.content.includes == "suce"){
-    message.delete(1000)
-  }
+ console.log(" ")
 
   if(message.content.startsWith(prefix)){
     let prefix = ("!!")
