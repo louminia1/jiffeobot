@@ -137,9 +137,12 @@ bot.on("message", async message => {
   }
 
   if(message.channel.guild.id = "509790078969839628"){
-    if(message.content.includes("pd") || message.content.includes("homo")|| message.content.includes("salope") || message.content.includes("pute")|| message.content.includes("homo")){
-      message.delete(5000)
-    }
+    if(message.author.bot) return;
+  const insultes = ["suce","enculé","encule","baise","salope","connard","conard","pute","connasse","bitch","pd","nique","batard","bite","biatch","branleur","abruti","enculer","chier","couille","emmerdeur","putain","ptn","enfoiré","gueule","merde","poufiasse","raclure", "fdp"];
+    if( insultes.some(word => message.content.includes(word)) ) {
+        message.delete(2000);
+        message.author.send('❌INSULTES INTERDITES').then ( msg => msg.delete(10000))
+      }
   }
 
   if(message.content.startsWith(prefix)){
