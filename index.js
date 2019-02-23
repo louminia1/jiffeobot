@@ -10,6 +10,7 @@ bot.commands = new Discord.Collection();
 let cooldown_coins = new Set();
 let scds_coins = 350;
 const mongoose = require('mongoose');
+const xp_used = false;
 let numberserveur = 10000
 
 //Data Init
@@ -22,6 +23,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 .catch(err => console.log(err));
 
 //Model Mongodb
+const xp = require("./Modules/Model/xp")
 
 bot.on("ready", async () => {
 	/*antispam(bot, {
@@ -152,10 +154,32 @@ bot.on("message", async message => {
       
     }
 
+  if(message.channel.guild.id = "509790078969839628"){
+    if(xp_used) return;
+    else{
+      xp.findOne({ID: message.author.id}, (err, xp) =>{
+        if(err) console.log(err)
+        if(!xp){
+        const newxp = new xp({
+          userID: message.author.id,
+          xp_count: 0,
+          level_count: 0,
+        })
+        newxp.save().catch(err => console.log(err))
+      }else{
+        xp.xp_count = xp_count + 1
+        xp.save()
+      }
+      xp_used = true;
+      setTimeout(() => {
+        xp_used = false;
+      }, 1000 * 30 )
+    })
+  }
+}
+
+
   
-  setTimeout(() => {
-    cooldown_coins.delete(message.author.id)
-  }, scds_coins * 1000)
 })
 
 
