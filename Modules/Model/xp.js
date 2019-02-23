@@ -6,4 +6,4 @@ const xpSchema = mongoose.Schema({
     level_count: Number,
 })
 
-module.exports = mongoose.model("xp", xpSchema);
+module.exports = mongoose.model("XP", xpSchema);

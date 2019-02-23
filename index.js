@@ -23,7 +23,7 @@ mongoose.connect(db, {useNewUrlParser: true})
 .catch(err => console.log(err));
 
 //Model Mongodb
-const xp = require("./Modules/Model/xp")
+const XP = require("./Modules/Model/xp")
 
 bot.on("ready", async () => {
 	/*antispam(bot, {
@@ -154,18 +154,18 @@ bot.on("message", async message => {
     if(message.channel.guild.id = "509790078969839628"){
       if(xp_used) return;
       else{
-        xp.findOne({ID: message.author.id}, (err, xp) =>{
+        XP.findOne({ID: message.author.id}, (err, xp) =>{
           if(err) console.log(err)
           if(!xp){
-          const newxp = new xp({
+          const newxp = new XP({
             userID: message.author.id,
             xp_count: 0,
             level_count: 0,
           })
           newxp.save().catch(err => console.log(err))
         }else{
-          xp.xp_count = xp_count + 1
-          xp.save()
+          XP.xp_count = XP.xp_count + 1
+          XP.save()
         }
         xp_used = true;
         setTimeout(() => {
