@@ -136,7 +136,11 @@ bot.on("message", async message => {
     console.log(` `)
   }
 
- console.log(" ")
+  if(message.channel.guild.id = "509790078969839628"){
+    if(message.content.includes("lol")){
+      message.delete(5000)
+    }
+  }
 
   if(message.content.startsWith(prefix)){
     let prefix = ("!!")
