@@ -154,7 +154,7 @@ bot.on("message", async message => {
     if(message.channel.guild.id = "509790078969839628"){
       if(xp_used) return;
       else{
-        XP.findOne({ID: message.author.id}, (err, xp) =>{
+        XP.findOne({userID: message.author.id}, (err, xp) =>{
           if(err) console.log(err)
           if(!xp){
           const newxp = new XP({
