@@ -141,7 +141,7 @@ bot.on("message", async message => {
   const insultes = ["suce","enculé","encule","baise","salope","connard","conard","pute","connasse","bitch","pd","nique","batard","bite","biatch","branleur","abruti","enculer","chier","couille","emmerdeur","putain","ptn","enfoiré","gueule","merde","poufiasse","raclure", "fdp"];
     if( insultes.some(word => message.content.includes(word)) ) {
         message.delete(2000);
-        message.author.send('❌INSULTES INTERDITES').then ( msg => msg.delete(10000))
+        message.author.send('❌INSULTES INTERDITES').then ( msg => msg.delete(40000))
       }
   }
 
