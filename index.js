@@ -160,12 +160,12 @@ bot.on("message", async message => {
           const newxp = new XP({
             userID: message.author.id,
             xp_count: 0,
-            level_count: 0,
+            level_count: 0
           })
           newxp.save().catch(err => console.log(err))
         }else{
-          XP.xp_count = XP.xp_count + 1
-          XP.save()
+          xp.xp_count = xp.xp_count + 1
+          xp.save()
         }
         xp_used = true;
         setTimeout(() => {
