@@ -137,7 +137,7 @@ bot.on("message", async message => {
   }
 
   if(message.channel.guild.id = "509790078969839628"){
-    if(message.content.includes("lol")){
+    if(message.content.includes("pd") || message.content.includes("homo")|| message.content.includes("salope") || message.content.includes("pute")|| message.content.includes("homo")){
       message.delete(5000)
     }
   }
