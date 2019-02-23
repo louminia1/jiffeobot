@@ -99,10 +99,6 @@ bot.on('guildMemberAdd', member => {
     //member.(`:tada: Bienvenue ${member.user.username} dans le serveur, passes un bon moment ici:tada:`);
   }
 
-  if(member.guild.id == "509790078969839628"){
-    const role = member.guild.roles.find("name", "❤️ Membre de Jiffeo");
-    member.addRole(role);
-  }
 
 
 })
@@ -154,29 +150,31 @@ bot.on("message", async message => {
       
     }
 
-  if(message.channel.guild.id = "509790078969839628"){
-    if(xp_used) return;
-    else{
-      xp.findOne({ID: message.author.id}, (err, xp) =>{
-        if(err) console.log(err)
-        if(!xp){
-        const newxp = new xp({
-          userID: message.author.id,
-          xp_count: 0,
-          level_count: 0,
+  if(message.content){
+    if(message.channel.guild.id = "509790078969839628"){
+      if(xp_used) return;
+      else{
+        xp.findOne({ID: message.author.id}, (err, xp) =>{
+          if(err) console.log(err)
+          if(!xp){
+          const newxp = new xp({
+            userID: message.author.id,
+            xp_count: 0,
+            level_count: 0,
+          })
+          newxp.save().catch(err => console.log(err))
+        }else{
+          xp.xp_count = xp_count + 1
+          xp.save()
+        }
+        xp_used = true;
+        setTimeout(() => {
+          xp_used = false;
+        }, 1000 * 30 )
         })
-        newxp.save().catch(err => console.log(err))
-      }else{
-        xp.xp_count = xp_count + 1
-        xp.save()
       }
-      xp_used = true;
-      setTimeout(() => {
-        xp_used = false;
-      }, 1000 * 30 )
-    })
+    }
   }
-}
 
 
   
